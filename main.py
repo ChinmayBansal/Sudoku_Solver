@@ -1,16 +1,38 @@
-# This is a sample Python script.
+# Solves maze, contains backtracking algorithm
+def solve(board):
+    find = find_empty(board)
+    if not find:
+        return True
+    else:
+        row, col = find
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+    for i in range(1,10):
+        if valid(board, i (row, col)):
+            board[row][col] = i
+
+            if solve(board):
+                return True
+
+            board[row][col] = 0
+
+    return False
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def valid(board, num, pos):
+    #Check if rows are valid.
+    for i in range(len(board[0])):
+        if board[pos[0]][i] == num and pos[i] != i:
+            return False
 
+    for i in range(len(board)):
+        if board[i][pos[i]] == num and pos[0] != i:
+            return False
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    box_x = pos[1] // 3
+    box_y = pos[0] // 3
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    for i in range(box_y * 3, box_y*3 +3):
+        for j in range(box_x * 3, box_x*3 +3):
+            if board[i][j] == num and (i,j) != pos:
+                return False
+    return True
